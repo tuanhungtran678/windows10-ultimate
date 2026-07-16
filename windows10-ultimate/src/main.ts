@@ -124,12 +124,65 @@ icons.forEach(icon=>{
 
     });
 
-    icon.addEventListener("dblclick",()=>{
+icon.addEventListener("dblclick",()=>{
 
-        alert(
-            icon.querySelector("span")!.textContent
-        );
+    const name =
+        icon.querySelector("span")!.textContent;
 
-    });
+    if(name==="This PC"){
+
+        openExplorer();
+
+    }
 
 });
+
+});
+
+function openExplorer(){
+
+    const windows =
+        document.getElementById("windows")!;
+
+    windows.innerHTML=`
+
+<div class="window">
+
+    <div class="window-titlebar">
+
+        <span>This PC</span>
+
+        <div>
+
+            <button>─</button>
+
+            <button>□</button>
+
+            <button id="close-window">✕</button>
+
+        </div>
+
+    </div>
+
+    <div class="window-content">
+
+        <h2>This PC</h2>
+
+        <p>Welcome to Windows 10 Ultimate.</p>
+
+    </div>
+
+</div>
+
+`;
+
+const closeButton =
+    document.getElementById("close-window") as HTMLButtonElement;
+
+closeButton.onclick = () => {
+
+    windows.innerHTML = "";
+
+};
+
+}
