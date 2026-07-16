@@ -43,7 +43,16 @@ app.innerHTML = `
 
         <div id="taskbar-pinned"></div>
 
-        <div id="taskbar-running"></div>
+        <div id="taskbar-running">
+
+    <button
+        id="explorer-task"
+        class="task-button"
+        style="display:none;">
+        📁
+    </button>
+
+</div>
 
         <div id="taskbar-right">
 
@@ -141,8 +150,27 @@ icon.addEventListener("dblclick",()=>{
 
 function openExplorer(){
 
+    const explorerTask =
+        document.getElementById("explorer-task") as HTMLButtonElement;
+
+    explorerTask.style.display = "block";
+
     const windows =
         document.getElementById("windows")!;
+
+    explorerTask.onclick = () => {
+
+    if (windowElement.style.display === "none") {
+
+        windowElement.style.display = "block";
+
+    } else {
+
+        windowElement.style.display = "none";
+
+    }
+
+};
 
     windows.innerHTML=`
 
@@ -257,6 +285,8 @@ maxButton.onclick = () => {
 };
 
 closeButton.onclick = () => {
+
+    explorerTask.style.display = "none";
 
     windows.innerHTML = "";
 
