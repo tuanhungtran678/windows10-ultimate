@@ -179,6 +179,47 @@ function openExplorer(){
 const closeButton =
     document.getElementById("close-window") as HTMLButtonElement;
 
+    const windowElement =
+    windows.querySelector(".window") as HTMLDivElement;
+
+const titlebar =
+    windows.querySelector(".window-titlebar") as HTMLDivElement;
+
+let dragging = false;
+
+let offsetX = 0;
+let offsetY = 0;
+
+titlebar.addEventListener("mousedown",(e)=>{
+
+    dragging = true;
+
+    const rect =
+        windowElement.getBoundingClientRect();
+
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+
+});
+
+document.addEventListener("mousemove",(e)=>{
+
+    if(!dragging) return;
+
+    windowElement.style.left =
+        `${e.clientX-offsetX}px`;
+
+    windowElement.style.top =
+        `${e.clientY-offsetY}px`;
+
+});
+
+document.addEventListener("mouseup",()=>{
+
+    dragging = false;
+
+});
+
 closeButton.onclick = () => {
 
     windows.innerHTML = "";

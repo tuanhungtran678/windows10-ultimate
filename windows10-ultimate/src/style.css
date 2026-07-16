@@ -262,6 +262,8 @@ body,
 
 .window-titlebar{
 
+    cursor:move;
+
     height:36px;
 
     background:#f3f3f3;
