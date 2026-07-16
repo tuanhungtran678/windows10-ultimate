@@ -154,10 +154,8 @@ function openExplorer(){
 
         <div>
 
-            <button>─</button>
-
-            <button>□</button>
-
+            <button id="min-window">─</button>
+            <button id="max-window">□</button>
             <button id="close-window">✕</button>
 
         </div>
@@ -178,6 +176,12 @@ function openExplorer(){
 
 const closeButton =
     document.getElementById("close-window") as HTMLButtonElement;
+
+const minButton =
+    document.getElementById("min-window") as HTMLButtonElement;
+
+const maxButton =
+    document.getElementById("max-window") as HTMLButtonElement;
 
     const windowElement =
     windows.querySelector(".window") as HTMLDivElement;
@@ -220,6 +224,38 @@ document.addEventListener("mouseup",()=>{
 
 });
 
+let maximized = false;
+
+minButton.onclick = () => {
+
+    windowElement.style.display = "none";
+
+};
+
+maxButton.onclick = () => {
+
+    maximized = !maximized;
+
+    if (maximized) {
+
+        windowElement.style.left = "0";
+        windowElement.style.top = "0";
+        windowElement.style.width = "100%";
+        windowElement.style.height = "calc(100% - 48px)";
+        windowElement.style.borderRadius = "0";
+
+    } else {
+
+        windowElement.style.left = "180px";
+        windowElement.style.top = "80px";
+        windowElement.style.width = "720px";
+        windowElement.style.height = "450px";
+        windowElement.style.borderRadius = "8px";
+
+    }
+
+};
+
 closeButton.onclick = () => {
 
     windows.innerHTML = "";
@@ -227,3 +263,4 @@ closeButton.onclick = () => {
 };
 
 }
+
