@@ -1,4 +1,5 @@
 import "./style.css";
+import { openExplorer } from "./explorer";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 
@@ -7,52 +8,50 @@ app.innerHTML = `
 
     <div id="desktop-icons">
 
-    <div class="desktop-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
-        <span>This PC</span>
+        <div class="desktop-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
+            <span>This PC</span>
+        </div>
+
+        <div class="desktop-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png">
+            <span>Recycle Bin</span>
+        </div>
+
+        <div class="desktop-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png">
+            <span>Documents</span>
+        </div>
+
+        <div class="desktop-icon">
+            <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png">
+            <span>Edge</span>
+        </div>
+
     </div>
 
-    <div class="desktop-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png">
-        <span>Recycle Bin</span>
-    </div>
-
-    <div class="desktop-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png">
-        <span>Documents</span>
-    </div>
-
-    <div class="desktop-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png">
-        <span>Edge</span>
-    </div>
-
-</div>
 
     <div id="windows"></div>
 
     <div id="start-menu"></div>
 
+
     <div id="taskbar">
 
         <button id="start-button">
+
             <img
                 src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg"
                 alt="Windows">
+
         </button>
+
 
         <div id="taskbar-pinned"></div>
 
-        <div id="taskbar-running">
 
-    <button
-        id="explorer-task"
-        class="task-button"
-        style="display:none;">
-        📁
-    </button>
+        <div id="taskbar-running"></div>
 
-</div>
 
         <div id="taskbar-right">
 
@@ -64,10 +63,16 @@ app.innerHTML = `
 
         </div>
 
+
     </div>
 
 </div>
 `;
+
+
+// =====================
+// START MENU
+// =====================
 
 const startButton =
     document.getElementById("start-button")!;
@@ -75,13 +80,15 @@ const startButton =
 const startMenu =
     document.getElementById("start-menu")!;
 
-startButton.onclick = (e) => {
 
-    e.stopPropagation();
+startButton.onclick = (event) => {
+
+    event.stopPropagation();
 
     startMenu.classList.toggle("show");
 
 };
+
 
 document.addEventListener("click", () => {
 
@@ -89,208 +96,94 @@ document.addEventListener("click", () => {
 
 });
 
-startMenu.onclick = (e) => {
 
-    e.stopPropagation();
+startMenu.onclick = (event) => {
+
+    event.stopPropagation();
 
 };
 
+
+// =====================
+// CLOCK
+// =====================
+
 function updateClock(){
 
-    const now=new Date();
+    const now = new Date();
 
-    document.getElementById("clock")!.innerHTML=
+    const clock =
+        document.getElementById("clock")!;
 
-        now.toLocaleTimeString([],{
+
+    clock.innerHTML =
+
+        now.toLocaleTimeString([], {
 
             hour:"2-digit",
             minute:"2-digit"
 
-        })+
+        })
 
-        "<br>"+
+        +
+
+        "<br>"
+
+        +
 
         now.toLocaleDateString();
 
 }
 
+
 updateClock();
 
 setInterval(updateClock,1000);
 
-const icons =
-document.querySelectorAll(".desktop-icon");
 
-icons.forEach(icon=>{
+// =====================
+// DESKTOP ICONS
+// =====================
+
+const icons =
+    document.querySelectorAll(".desktop-icon");
+
+
+icons.forEach(icon => {
+
 
     icon.addEventListener("click",()=>{
 
-        icons.forEach(i=>
-            i.classList.remove("selected")
-        );
+
+        icons.forEach(i => {
+
+            i.classList.remove("selected");
+
+        });
+
 
         icon.classList.add("selected");
 
+
     });
 
-icon.addEventListener("dblclick",()=>{
 
-    const name =
-        icon.querySelector("span")!.textContent;
 
-    if(name==="This PC"){
+    icon.addEventListener("dblclick",()=>{
 
-        openExplorer();
 
-    }
+        const name =
+            icon.querySelector("span")!.textContent;
 
-});
 
-});
+        if(name === "This PC"){
 
-function openExplorer(){
+            openExplorer();
 
-    const explorerTask =
-        document.getElementById("explorer-task") as HTMLButtonElement;
+        }
 
-    explorerTask.style.display = "block";
 
-    const windows =
-        document.getElementById("windows")!;
+    });
 
-    explorerTask.onclick = () => {
-
-    if (windowElement.style.display === "none") {
-
-        windowElement.style.display = "block";
-
-    } else {
-
-        windowElement.style.display = "none";
-
-    }
-
-};
-
-    windows.innerHTML=`
-
-<div class="window">
-
-    <div class="window-titlebar">
-
-        <span>This PC</span>
-
-        <div>
-
-            <button id="min-window">─</button>
-            <button id="max-window">□</button>
-            <button id="close-window">✕</button>
-
-        </div>
-
-    </div>
-
-    <div class="window-content">
-
-        <h2>This PC</h2>
-
-        <p>Welcome to Windows 10 Ultimate.</p>
-
-    </div>
-
-</div>
-
-`;
-
-const closeButton =
-    document.getElementById("close-window") as HTMLButtonElement;
-
-const minButton =
-    document.getElementById("min-window") as HTMLButtonElement;
-
-const maxButton =
-    document.getElementById("max-window") as HTMLButtonElement;
-
-    const windowElement =
-    windows.querySelector(".window") as HTMLDivElement;
-
-const titlebar =
-    windows.querySelector(".window-titlebar") as HTMLDivElement;
-
-let dragging = false;
-
-let offsetX = 0;
-let offsetY = 0;
-
-titlebar.addEventListener("mousedown",(e)=>{
-
-    dragging = true;
-
-    const rect =
-        windowElement.getBoundingClientRect();
-
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
 
 });
-
-document.addEventListener("mousemove",(e)=>{
-
-    if(!dragging) return;
-
-    windowElement.style.left =
-        `${e.clientX-offsetX}px`;
-
-    windowElement.style.top =
-        `${e.clientY-offsetY}px`;
-
-});
-
-document.addEventListener("mouseup",()=>{
-
-    dragging = false;
-
-});
-
-let maximized = false;
-
-minButton.onclick = () => {
-
-    windowElement.style.display = "none";
-
-};
-
-maxButton.onclick = () => {
-
-    maximized = !maximized;
-
-    if (maximized) {
-
-        windowElement.style.left = "0";
-        windowElement.style.top = "0";
-        windowElement.style.width = "100%";
-        windowElement.style.height = "calc(100% - 48px)";
-        windowElement.style.borderRadius = "0";
-
-    } else {
-
-        windowElement.style.left = "180px";
-        windowElement.style.top = "80px";
-        windowElement.style.width = "720px";
-        windowElement.style.height = "450px";
-        windowElement.style.borderRadius = "8px";
-
-    }
-
-};
-
-closeButton.onclick = () => {
-
-    explorerTask.style.display = "none";
-
-    windows.innerHTML = "";
-
-};
-
-}
-
