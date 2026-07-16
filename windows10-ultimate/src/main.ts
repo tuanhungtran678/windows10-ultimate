@@ -5,7 +5,29 @@ const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `
 <div id="desktop">
 
-    <div id="desktop-icons"></div>
+    <div id="desktop-icons">
+
+    <div class="desktop-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
+        <span>This PC</span>
+    </div>
+
+    <div class="desktop-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991112.png">
+        <span>Recycle Bin</span>
+    </div>
+
+    <div class="desktop-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png">
+        <span>Documents</span>
+    </div>
+
+    <div class="desktop-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png">
+        <span>Edge</span>
+    </div>
+
+</div>
 
     <div id="windows"></div>
 
@@ -86,3 +108,28 @@ function updateClock(){
 updateClock();
 
 setInterval(updateClock,1000);
+
+const icons =
+document.querySelectorAll(".desktop-icon");
+
+icons.forEach(icon=>{
+
+    icon.addEventListener("click",()=>{
+
+        icons.forEach(i=>
+            i.classList.remove("selected")
+        );
+
+        icon.classList.add("selected");
+
+    });
+
+    icon.addEventListener("dblclick",()=>{
+
+        alert(
+            icon.querySelector("span")!.textContent
+        );
+
+    });
+
+});
